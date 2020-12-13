@@ -103,6 +103,7 @@ export default {
       this.info.isShow = !this.info.isShow;
     },
     empty() {
+      this.imageUrl=''
       this.form = {
         pid: "",
         catename: "",

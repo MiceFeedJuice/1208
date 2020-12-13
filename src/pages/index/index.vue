@@ -15,19 +15,21 @@
             <span slot="title">首页</span>
           </el-menu-item>
 
-          <el-submenu index="1">
+
+          <div v-for="item in list.menus" :key="item.id">
+            <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-s-tools"></i>
-              <span>系统设置</span>
+              <i :class="item.icon"></i>
+              <span>{{item.title}}</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/index/menu">菜单管理</el-menu-item>
-              <el-menu-item index="/index/role">角色管理</el-menu-item>
-              <el-menu-item index="/index/manger">管理员管理</el-menu-item>
+              <el-menu-item :index="'/index'+i.url" v-for='i in item.children' :key="i.id">{{i.title}}</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+          </div>
+          
 
-          <el-submenu index="3">
+          <!-- <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-goods"></i>
               <span>商城管理</span>
@@ -40,11 +42,15 @@
               <el-menu-item index="/index/banner">轮播图管理</el-menu-item>
               <el-menu-item index="/index/seckill">秒杀管理</el-menu-item>
             </el-menu-item-group>
-          </el-submenu>
+          </el-submenu> -->
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <span class="span2"><el-button type="danger" @click="buttc">退出</el-button></span>
+          <span class="span1">{{list.username}}</span>
+          
+          </el-header>
         <el-main>
             <!-- 名字 -->
           <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -61,18 +67,41 @@
 </template>
 
 <script>
+
+import {mapGetters,mapActions} from 'vuex'
+
 export default {
   components: {},
   data() {
     return {};
   },
-  methods: {},
-  mounted() {},
-  computed: {},
+  methods: {
+    ...mapActions({
+        requestuserList:'user/requestuserList'
+    }),
+    buttc(){
+      this.requestuserList({});
+      this.$router.push("/login");
+    }
+  },
+  mounted() {
+   
+  },
+  computed: {
+    ...mapGetters({
+      list:'user/list'
+    })
+  },
   watch: {},
 };
 </script>
 <style scoped>
+span{
+  float: right;
+  margin: 0 10px;
+}
+
+
 .el-header {
   background-color: #b3c0d1;
   color: #333;

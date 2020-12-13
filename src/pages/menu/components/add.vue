@@ -56,8 +56,8 @@
             <el-option
               v-for="item in indexRouters"
               :key="item.path"
-              :label="'/' + item.path"
-              :value="item.name"
+              :label="item.name"
+              :value="'/' + item.path"
             ></el-option>
           </el-select>
         </el-form-item>
